@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.0-dev (unreleased)
---------------------
+1.0 (2015-07-01)
+----------------
 
 - Package created using templer
   []
