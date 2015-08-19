@@ -35,14 +35,47 @@ work_dir
 Example usage
 =============
 
-We'll start by creating a `buildout.cfg` file that uses the recipe::
+We'll start by creating a `buildout.cfg` file that uses the recipe:
+
+::
 
     [buildout]
     parts = makebuildoutcache
 
     [makebuildoutcache]
     recipe = collective.recipe.buildoutcache
-
     target = buildout-cache.tar.bz2
     buildout_file = buildout.cfg
     work_dir = my-temp-buildout-work-dir
+
+For recipe installation you can make this command line:
+
+::
+
+    ./bin/buildout install makebuildoutcache
+
+And start recipe script:
+
+::
+
+    ./bin/makebuildoutcache
+
+Then all these packages will download temporally into the directory **my-temp-buildout-work-dir** defined and later it will create a **buildout-cache.tar.bz2** file in the Buildout directory.
+
+buildout-cache.tar.bz2 archive
+==============================
+
+The **buildout-cache.tar.bz2** archive contains one single buildout-cache folder. In this folder, there are 2 folders:
+
+* **eggs:** contains all eggs use by your buildout except eggs which have to be compiled.
+
+* **downloads:** contains zip eggs which must be compiled (as AccessControl, lxml, Pillow, ZODB, ...).
+
+Before starting a buildout, we download and extract buildout-cache and use it on our buildout directory. We add eggs-directory and download-cache parameters on buildout section like this:
+
+::
+
+    [buildout]
+
+    eggs-directory = buildout-cache/eggs
+    download-cache = buildout-cache/downloads
