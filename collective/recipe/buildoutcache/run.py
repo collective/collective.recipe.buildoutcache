@@ -18,27 +18,30 @@ def do_command(cmd):
                           shell=True,
                           universal_newlines=True)
     po.communicate()
+    return po.returncode
 
 
-def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.'):
+def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.', timeout='10'):
     complete_work_dir = "{0}/{1}".format(buildout_dir, work_dir)
     if os.path.exists(complete_work_dir):
         logger.info('Remove existing work dir')
         shutil.rmtree(complete_work_dir)
     buildoutcache_dir = '{0}/buildout-cache'.format(complete_work_dir)
 
-    bin_buildout(buildout_file, buildoutcache_dir, buildout_dir)
+    result = bin_buildout(buildout_file, buildoutcache_dir, buildout_dir, timeout)
+    if result != 0:
+        return result
     prepare_cache(buildoutcache_dir)
     make_archive(target, work_dir)
 
 
-def bin_buildout(buildout_file, buildoutcache_dir, buildout_dir='.'):
+def bin_buildout(buildout_file, buildoutcache_dir, buildout_dir='.', timeout='10'):
     logger.info('Create tmp folder for buildout cache downloads')
     do_command('mkdir -p {0}/downloads'.format(buildoutcache_dir))
 
     logger.info('Starting buildout...')
-    cmd = '{2}/bin/buildout -Nt 7 -c {0} buildout:eggs-directory={1}/eggs buildout:download-cache={1}/downloads'.format(buildout_file, buildoutcache_dir, buildout_dir)
-    do_command(cmd)
+    cmd = '{2}/bin/buildout -Nt {3} -c {0} buildout:eggs-directory={1}/eggs buildout:download-cache={1}/downloads'.format(buildout_file, buildoutcache_dir, buildout_dir, timeout)
+    return do_command(cmd)
 
 
 def prepare_cache(buildoutcache_dir):
