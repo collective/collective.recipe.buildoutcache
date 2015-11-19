@@ -22,6 +22,13 @@ class Recipe(object):
             self.work_dir = options['work_dir']
         else:
             self.work_dir = 'tmp'
+        if 'timeout' in self.options:
+            self.timeout = options['timeout']
+        else:
+            if buildout['buildout'].get('socket-timeout'):
+                self.timeout = buildout['buildout'].get('socket-timeout')
+            else:
+                self.timeout = '10'
 
     def install(self):
         """Installer"""
@@ -31,7 +38,8 @@ class Recipe(object):
         for key, value in {
             'target': self.target,
             'buildout_file': self.buildout_file,
-            'work_dir': self.work_dir
+            'work_dir': self.work_dir,
+            'timeout': self.timeout
         }.iteritems():
             if value is not None:
                 arguments += "%s='%s', " % (key, value)

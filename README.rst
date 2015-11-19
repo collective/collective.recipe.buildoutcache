@@ -31,6 +31,8 @@ buildout_file
 work_dir
     Directory where eggs are downloaded for creation of tar.gz2 file. This directroy is deleted before and after the script. Default value is `tmp`.
 
+timeout
+    Timeout using for buildout in second. If no timeout define but a socket-timeout into buildout section, socket-timeout value is used. Default value is 10.
 
 Example usage
 =============
