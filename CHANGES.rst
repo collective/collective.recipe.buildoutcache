@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
+1.0.1 (2015-11-19)
 ------------------
 
 - Add timeout option
