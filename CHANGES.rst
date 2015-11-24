@@ -4,7 +4,8 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add preremove_old_work_dir option. You can now not delete work dir if a build failed.
+  [bsuttor]
 
 
 1.0.1 (2015-11-19)

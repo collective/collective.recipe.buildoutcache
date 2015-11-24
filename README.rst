@@ -34,6 +34,10 @@ work_dir
 timeout
     Timeout using for buildout in second. If no timeout define but a socket-timeout into buildout section, socket-timeout value is used. Default value is 10.
 
+preremove_old_work_dir
+    Sometime we want to keep word_dir if a build failed. Default value is True, so work_dir will be deleted by default.
+
+
 Example usage
 =============
 
