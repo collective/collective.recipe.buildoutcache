@@ -29,6 +29,10 @@ class Recipe(object):
                 self.timeout = buildout['buildout'].get('socket-timeout')
             else:
                 self.timeout = '10'
+        if 'preremove_old_work_dir' in self.options:
+            self.preremove_old_work_dir = bool(options['preremove_old_work_dir'])
+        else:
+            self.preremove_old_work_dir = True
 
     def install(self):
         """Installer"""

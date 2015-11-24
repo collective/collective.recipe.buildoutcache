@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import subprocess
 import os
 import re
@@ -21,11 +22,12 @@ def do_command(cmd):
     return po.returncode
 
 
-def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.', timeout='10'):
-    complete_work_dir = "{0}/{1}".format(buildout_dir, work_dir)
-    if os.path.exists(complete_work_dir):
-        logger.info('Remove existing work dir')
-        shutil.rmtree(complete_work_dir)
+def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.', timeout='10', preremove_old_work_dir=True):
+    complete_work_dir = '{0}/{1}'.format(buildout_dir, work_dir)
+    if preremove_old_work_dir:
+        if os.path.exists(complete_work_dir):
+            logger.info('Remove existing work dir')
+            shutil.rmtree(complete_work_dir)
     buildoutcache_dir = '{0}/buildout-cache'.format(complete_work_dir)
 
     result = bin_buildout(buildout_file, buildoutcache_dir, buildout_dir, timeout)
