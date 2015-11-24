@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.3 (unreleased)
+1.0.3 (2015-11-24)
 ------------------
 
 - Fix way to get bool from a str.
