@@ -14,6 +14,10 @@ BINARY_SIG_RE = re.compile(r'-py2.[7]-.+(?=.egg)')
 PY_SIG = '-.py2.7'
 
 
+def str2bool(v):
+    return v.lower() in ("yes", "true", "True", "t", "1")
+
+
 def do_command(cmd):
     po = subprocess.Popen(cmd,
                           shell=True,
@@ -22,9 +26,9 @@ def do_command(cmd):
     return po.returncode
 
 
-def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.', timeout='10', preremove_old_work_dir=True):
+def maketargz(target='buildout-cache.tar.bz2', buildout_file='buildout.cfg', work_dir='tmp', buildout_dir='.', timeout='10', preremove_old_work_dir='True'):
     complete_work_dir = '{0}/{1}'.format(buildout_dir, work_dir)
-    if preremove_old_work_dir:
+    if str2bool(preremove_old_work_dir):
         if os.path.exists(complete_work_dir):
             logger.info('Remove existing work dir')
             shutil.rmtree(complete_work_dir)
