@@ -5,6 +5,10 @@ from pkg_resources import working_set
 from sys import executable
 
 
+def str2bool(v):
+    return v.lower() in ("yes", "true", "t", "1")
+
+
 class Recipe(object):
     """zc.buildout recipe"""
 
@@ -30,7 +34,7 @@ class Recipe(object):
             else:
                 self.timeout = '10'
         if 'preremove_old_work_dir' in self.options:
-            self.preremove_old_work_dir = bool(options['preremove_old_work_dir'])
+            self.preremove_old_work_dir = str2bool(options['preremove_old_work_dir'])
         else:
             self.preremove_old_work_dir = True
 
